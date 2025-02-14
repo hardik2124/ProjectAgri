@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Key Events Demo</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #output {
+            color: blue;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Press a key</h1>
+    <input type="text" id="inputField" placeholder="Type something here" />
+    <div id="output"></div>
+
+    <script>
+        $(document).ready(function () {
+            // Handle keydown event
+            $('#inputField').keydown(function (event) {
+                $('#output').text('Keydown event: ' + event.key);
+            });
+
+            // Handle keypress event
+            $('#inputField').keypress(function (event) {
+                $('#output').text('Keypress event: ' + event.key);
+            });
+
+            // Handle keyup event
+            $('#inputField').keyup(function (event) {
+                $('#output').text('Keyup event: ' + event.key);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Events with jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #example,
+        #example1 {
+            width: 300px;
+            height: 150px;
+            background-color: lightblue;
+            text-align: center;
+            line-height: 150px;
+            font-size: 20px;
+            margin: 50px auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="example">Hover or Click me!</div>
+
+    <div id="example1">Double Click me!</div>
+
+    <script>
+        $(document).ready(function () {
+            // Click event
+            $('#example').click(function () {
+                alert("Element clicked!");
+            });
+
+            // Double click event
+            $('#example1').dblclick(function () {
+                alert("Element double-clicked!");
+                console.log("Double click!")
+            });
+
+            // Mouse down event
+            $('#example').mousedown(function () {
+                console.log("Mouse button pressed!");
+            });
+
+            // Mouse up event
+            $('#example').mouseup(function () {
+                console.log("Mouse button released!");
+            });
+
+            // Mouse enter event (When mouse enters the element)
+            $('#example,#example1').mouseenter(function () {
+                console.log("Mouse entered the element!");
+            });
+
+            // Mouse leave event (When mouse leaves the element)
+            $('#example,#example1').mouseleave(function () {
+                console.log("Mouse left the element!");
+            });
+
+            // Mouse move event (When mouse moves over the element)
+            $('#example').mousemove(function (event) {
+                console.log("Mouse moved at position: (" + event.pageX + ", " + event.pageY + ")");
+            });
+
+            // Mouse over event (When mouse hovers over the element)
+            $('#example').mouseover(function () {
+                console.log("Mouse hovered over the element!");
+            });
+
+            // Mouse out event (When mouse moves out of the element)
+            $('#example').mouseout(function () {
+                console.log("Mouse moved out of the element!");
+            });
+
+            // Right-click context menu event
+            $('#example').contextmenu(function (event) {
+                event.preventDefault(); // To prevent the default right-click menu
+                console.log("Right-click context menu triggered!");
+            });
+
+        });
+    </script>
+
+    <form>
+
+        <input id="a1" placeholder="enter your name" type="text" /> 
+        <input id="a2" placeholder="enter your age" type="number" />
+        <input id="a3" placeholder="enter your mobile number" type="number" />
+        <input id="a4" value="submit" type="submit" />
+
+    </form>
+
+    <table>
+        <tr>
+            <td id="1"></td>
+        </tr>
+        <tr>
+            <td id="2"></td>
+        </tr>
+        <tr>
+            <td id="3"></td>
+        </tr>
+
+    </table>
+</body>
+
+</html>

@@ -2,6 +2,9 @@ const ProductHistory = require("../Models/ProductHistory");
 const Products = require("../Models/Products");
 
 exports.GetAllProducts = async (req, res) => {
+    const ownerId = req.query.ownerId; // Get ownerId from query parameters
+    console.log(ownerId);
+
     try {
         const { id } = req.body;
 
@@ -9,13 +12,7 @@ exports.GetAllProducts = async (req, res) => {
             return res.status(400).json({ success: false, message: "Owner Id is required" })
         }
 
-        const products = await Products.find({ ownerId: ownerId }).populate({
-            path: 'reviews', // Fetch reviews related to this product
-            populate: {
-                path: 'user', // Fetch user details of the reviewer
-                select: 'name email', // Select specific user fields
-            }
-        });
+        const products = await Products.find()
 
         if (!products) {
             return res.status(404).json({ success: false, message: "No products found" });

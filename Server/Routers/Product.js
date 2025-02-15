@@ -4,7 +4,7 @@ const { GetAllProducts, GetProductById, addProductStock, removeProductStock, add
 const {Auth,isAdmin} = require("../middleWare/Auth")
 
 
-router.get("/allproducts", Auth, GetAllProducts);
+router.get("/allproducts", GetAllProducts);
 router.get("/productbyid", Auth, GetProductById);
 router.post("/addProduct", Auth, isAdmin, addProduct);
 router.post("/editProduct", Auth, isAdmin, editProduct);

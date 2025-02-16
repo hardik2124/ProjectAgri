@@ -4,15 +4,17 @@ require("dotenv").config();
 exports.Auth = async (req, res, next) => {
     try {
 
-        const token = req.body.token || req.cookies.token || req.header("Authorisation").replace("bearer ", "");
+
+        // Attempt to get token from body or cookies
+        let token = req.body?.token || req.cookies?.token || req.header("Authorization")?.replace(/^Bearer\s+/i, "");
 
 
-        if (!token) {
-            return res.status(401).json({
-                success: false,
-                message: "token missing",
-            });
-        }
+        // If not found, attempt to extract it from the Authorization header safely
+        // const authHeader = req.header("Authorization");
+        // if (!token && authHeader) {
+        //     // Remove 'Bearer ' prefix in a case-insensitive manner using regex
+        //     token = authHeader.replace(/^Bearer\s+/i, "");
+        // }
 
 
         try {
@@ -29,6 +31,8 @@ exports.Auth = async (req, res, next) => {
 
         next();
     } catch (e) {
+        console.error("Auth Middleware Error:", e);
+        console.log("request aaii");
         return res.status(403).json({
             success: false,
             message: "Something Went Wrong While Validating the Token",
@@ -39,7 +43,7 @@ exports.Auth = async (req, res, next) => {
 exports.isFarmer = async (req, res, next) => {
     try {
 
-        if (req.user.accountType !== "farmer" ) {
+        if (req.user.accountType !== "farmer") {
             return res.status(403).json({
                 success: false,
                 message: "this is a protected route for Farmers",

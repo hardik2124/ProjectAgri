@@ -2,17 +2,18 @@ const ProductHistory = require("../Models/ProductHistory");
 const Products = require("../Models/Products");
 
 exports.GetAllProducts = async (req, res) => {
-    const ownerId = req.query.ownerId; // Get ownerId from query parameters
-    console.log(ownerId);
+    // const ownerId = req.query.ownerId; // Get ownerId from query parameters
+    // console.log(ownerId);
 
+    const { id } = req.user;
+    console.log("User id form getall product " + id);
     try {
-        const { id } = req.body;
 
-        if (!ownerId) {
-            return res.status(400).json({ success: false, message: "Owner Id is required" })
-        }
+        // if (!ownerId) {
+        //     return res.status(400).json({ success: false, message: "Owner Id is required" })
+        // }
 
-        const products = await Products.find()
+        const products = await Products.find({ ownerId: id });
 
         if (!products) {
             return res.status(404).json({ success: false, message: "No products found" });

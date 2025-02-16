@@ -10,11 +10,11 @@ export const authEndppoints = {
 }
 
 export const productEndpoints = {
-    GETPRODUCTS_API: BASE_URL + "/products/allproducts",
-    GETBYIDPRODUCT_API: BASE_URL + "/products/productbyid",
-    ADDPRODUCT_API: BASE_URL + "/products/addProduct",
-    DELETEPRODUCT_API: BASE_URL + "/products/deleteProduct",
-    EDITPRODUCT_API: BASE_URL + "/products/editProduct",
-    ADDPRODUCTSTOCK_API: BASE_URL + "/products/addProductStock",
-    REMOVEPRODUCTSTOCK_API: BASE_URL + "/products/removeProductStock",
+    GETALLPRODUCTS_API: BASE_URL + "/product/getAllProducts",
+    GETBYIDPRODUCT_API: BASE_URL + "/product/productbyid",
+    ADDPRODUCT_API: BASE_URL + "/product/addProduct",
+    DELETEPRODUCT_API: BASE_URL + "/product/deleteProduct",
+    EDITPRODUCT_API: BASE_URL + "/product/editProduct",
+    ADDPRODUCTSTOCK_API: BASE_URL + "/product/addProductStock",
+    REMOVEPRODUCTSTOCK_API: BASE_URL + "/product/removeProductStock",
 }

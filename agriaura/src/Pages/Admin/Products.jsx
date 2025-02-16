@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Pencil, Plus, Minus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProduct } from "../../Services/Oprations/ProductOP";
+import { fetchProducts } from "../../Services/Oprations/ProductOP";
 import axios from "axios";
 
 const AllProducts = () => {
@@ -12,59 +12,83 @@ const AllProducts = () => {
   const [categories, setCategories] = useState(["All"]);
   const [loading, setLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state
+  const token = useSelector((state) => state.auth.token);
+
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true); // Set loading to true when fetching starts
-      setError(null); // Clear any previous errors
+    // const fetchProducts = async () => {
+    //   setLoading(true); // Set loading to true when fetching starts
+    //   setError(null); // Clear any previous errors
+    //   try {
+    //     const storedUser = localStorage.getItem('user');
+
+    //     if (!storedUser) {
+    //       console.error("User data not found in local storage.");
+    //       setError("User data not found. Please log in."); // Set error message
+    //       return;
+    //     }
+
+    //     const user = JSON.parse(storedUser);
+    //     const ownerId = user._id;
+
+    //     if (!ownerId) {
+    //       console.error("Owner ID not found in user data.");
+    //       setError("Owner ID not found. Contact support."); // Set error message
+    //       return;
+    //     }
+
+    //     const url = `http://localhost:5154/api/v1/product/allproducts?ownerId=${ownerId}`;
+
+    //     const response = await axios.get(url); // Corrected
+    //     const data = response.data; // Extract data object
+
+    //     if (data && data.sucess && data.products) {
+    //       setProducts(data.products); //  Access to the real products array
+    //       //console.log(product);
+    //     } else {
+    //       console.warn("No products or invalid format received:", data);
+    //       setError("No products found.");
+    //       setProducts([]);
+    //     }
+
+    //     // Extract unique categories from the products data
+    //     const uniqueCategories = [
+    //       "All", // "All" is always included as an option
+    //       ...new Set(products.map((product) => product.category)), // Get unique categories
+    //     ];
+    //     setCategories(uniqueCategories);
+
+    //   } catch (err) {
+    //     console.error("Error fetching products:", err);
+    //     setError("Failed to fetch products."); // Set error message
+    //   } finally {
+    //     setLoading(false); // Set loading to false when fetching is complete (success or error)
+    //   }
+    // };
+
+    const getData = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const storedUser = localStorage.getItem('user');
-
-        if (!storedUser) {
-          console.error("User data not found in local storage.");
-          setError("User data not found. Please log in."); // Set error message
-          return;
-        }
-
-        const user = JSON.parse(storedUser);
-        const ownerId = user._id;
-
-        if (!ownerId) {
-          console.error("Owner ID not found in user data.");
-          setError("Owner ID not found. Contact support."); // Set error message
-          return;
-        }
-
-        const url = `http://localhost:5154/api/v1/product/allproducts?ownerId=${ownerId}`;
-
-        const response = await axios.get(url); // Corrected
-        const data = response.data; // Extract data object
-
-        if (data && data.sucess && data.products) {
-          setProducts(data.products); //  Access to the real products array
-          //console.log(product);
-        } else {
-          console.warn("No products or invalid format received:", data);
+        const response = await fetchProducts(token);
+        if (response == null) {
+          console.warn("No products or invalid format received:", products);
           setError("No products found.");
           setProducts([]);
+        } else {
+
+          setProducts(response);
+          console.log(response);
         }
-
-        // Extract unique categories from the products data
-        const uniqueCategories = [
-          "All", // "All" is always included as an option
-          ...new Set(products.map((product) => product.category)), // Get unique categories
-        ];
-        setCategories(uniqueCategories);
-
-      } catch (err) {
-        console.error("Error fetching products:", err);
-        setError("Failed to fetch products."); // Set error message
+      } catch (error) {
+        console.error("Error in getData:", error);
+        setError("Error fetching products.");
       } finally {
-        setLoading(false); // Set loading to false when fetching is complete (success or error)
+        setLoading(false);
       }
     };
 
-    fetchProducts();
+    getData();
 
   }, []);
 
